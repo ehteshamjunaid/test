@@ -1,0 +1,167 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<!--
+ | This is the configuration file for Maven. It can be specified at two levels:
+ |
+ |  1. User Level. This settings.xml file provides configuration for a single user,
+ |                 and is normally provided in ${user.home}/.m2/settings.xml.
+ |
+ |                 NOTE: This location can be overridden with the CLI option:
+ |
+ |                 -s /path/to/user/settings.xml
+ |
+ |  2. Global Level. This settings.xml file provides configuration for all Maven
+ |                 users on a machine (assuming they're all using the same Maven
+ |                 installation). It's normally provided in
+ |                 ${maven.home}/conf/settings.xml.
+ |
+ |                 NOTE: This location can be overridden with the CLI option:
+ |
+ |                 -gs /path/to/global/settings.xml
+ |
+ | The sections in this sample file are intended to give you a running start at
+ | getting the most out of your Maven installation. Where appropriate, the default
+ | values (values used when the setting is not specified) are provided.
+ |
+ |-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <servers>
+    <server>
+      <id>BPaid-RELEASES</id>
+      <username>admin</username>
+      <password>BcUk6800</password>
+    </server>
+
+    <server>
+      <id>BPaid-SNAPSHOTS</id>
+      <username>admin</username>
+      <password>BcUk6800</password>
+    </server>
+
+    <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>admin</password>
+    </server>
+
+     <server>
+      <id>bbs-idv</id>
+      <username>admin</username>
+      <password>BcUk6800</password>
+    </server>
+    <server>
+      <id>runtest</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+
+
+
+  </servers>
+
+  <profiles>
+   <profile>
+            <id>snar1</id>
+            <properties>
+                 <sonar.host.url>http://172.18.218.58:9000</sonar.host.url>
+                 <sonar.jdbc.url>jdbc:h2:tcp://172.18.218.58:9092/sonar</sonar.jdbc.url>
+                 <sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
+                 <sonar.jdbc.username>sonartest</sonar.jdbc.username>
+                 <sonar.jdbc.password>sonartest</sonar.jdbc.password>
+            </properties>
+     </profile>
+
+    <profile>
+      <id>nexus</id>
+      <!-- Enable snapshots for the built in central repo to direct -->
+      <!-- all requests to nexus via the mirror -->
+      <repositories>
+        <repository>
+          <id>nexus</id>
+          <url>http://172.18.218.195:8081/nexus/content/groups/public/</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        
+           <repository>
+          <id>runtest</id>
+          <url>http://172.18.218.195:8081/nexus/content/repositories/runtest</url>
+          <releases><enabled>false</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+
+	<repository>
+          <id>testproject</id>
+          <url>http://172.18.218.195:8081/nexus/content/repositories/testproject</url>
+          <releases><enabled>false</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+     </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>nexus</id>
+          <url>http://172.18.218.195:8081/nexus/content/groups/public/</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+     <!--  <pluginRepository>
+          <id>nexus</id>
+          <url>http://172.18.218.195:8081/nexus/content/repositories/BPaid-SNAPSHOTS/</url>
+          <releases><enabled>false</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+        <pluginRepository>
+          <id>nexus</id>
+          <url>http://172.18.218.195:8081/nexus/content/repositories/BPaid-RELEASES/</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>false</enabled></snapshots>
+          </pluginRepository>
+         <pluginRepository>
+          <id>nexus</id>
+          <url>http://172.18.218.195:8081/nexus/content/repositories/Digital-TabletPOS</url>
+          <releases><enabled>false</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+       </pluginRepository> -->
+     </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+        <activeProfile>nexus</activeProfile>
+        <activeProfile>runtest</activeProfile>
+        <activeProfile>admin</activeProfile>
+
+
+    <!-- make the profile active all the time -->
+    <!--activeProfile>nexus</activeProfile-->
+  </activeProfiles>
+
+  <pluginGroups>
+    <!-- define the sonatype plugin group, so the nexus plugins will work without typing the groupId -->
+    <pluginGroup>org.sonatype.plugins</pluginGroup>
+  </pluginGroups>
+
+</settings>
+
